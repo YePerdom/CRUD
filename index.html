@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="script.js"></script>
+    <form action="form-task" onsubmit="createtask()">
+        <label for="name">Nombre de tarea</label>
+        <input type="text" name="name">
+        <label for="status">Estado de la tarea</label>
+        <select name="status">
+            <option value="" selected>--------------</option>
+            <option value="todo">Por hacer</option>
+            <option value="in_progress">En progreso</option>
+            <option value="done">Completada</option>
+        </select>
+        <label for="description">Descripción de la tarea</label>
+        <textarea name="description" rows="3"></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <table id="table-tasks">
+        <thead>
+            <tr>
+            <th>Tarea</th>
+            <th>Estado</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+</html>
