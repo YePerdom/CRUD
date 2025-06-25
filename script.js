@@ -13,7 +13,7 @@ document.getElementById("form-task").addEventListener("submit", async function (
             body: JSON.stringify(data)
         });
         this.reset();
-        await createTask();
+        await showTasks();
     } catch (error) {
         console.error('Error al crear tarea')
     }
@@ -32,7 +32,7 @@ const getStatus = (status) => {
     }
 }
 
-async function createTask() {
+async function showTasks() {
     try {
         const response = await fetch(`${apiUrl}?is_active=true`);
         const tasks = await response.json();
@@ -46,7 +46,7 @@ async function createTask() {
             <td>${getStatus(task.status)}</td>
             <td>${task.description}</td>
             <td>
-              <button onclick>Editar</button>
+              <button onclick="updateTask(${task.id}, this)">Editar</button>
               <button onclick>Eliminar</button>
             </td>
             `;
@@ -57,7 +57,34 @@ async function createTask() {
     }
 }
 
+async function updateTask(id, boton) {
+    const fila = boton.closest("tr");
+    const [tdname, tdstatus,tddescription] = fila.children;
+
+    const name = prompt("Editar nombre:", tdname.textContent);
+    const status = prompt("Editar estado:", tdstatus.textContent);
+    const description = prompt("Editar nombre:", tddescription.textContent);
+    
+    if (!name || !status || !description){
+        alert("Todos los campos son requeridos");
+        return;
+    }
+
+    const editedTask = {name, status, description, is_active:true};
+
+    try {
+        await fetch(`${apiUrl}/${id}`, {
+            method: "PUT",
+            haders: {"Content-Type": "application/json"},
+            body: JSON.stringify(editedTask)
+        });
+        await showTasks();
+    } catch (error) {
+        console.error("Error al editar",error);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    createTask();
+    showTasks();
 });
 
