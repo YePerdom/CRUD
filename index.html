@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script src="script.js"></script>
-    <form action="form-task" onsubmit="createtask()">
+    <form id="form-task" onsubmit="createTask()">
         <label for="name">Nombre de tarea</label>
         <input type="text" name="name">
         <label for="status">Estado de la tarea</label>
@@ -22,17 +21,18 @@
         <textarea name="description" rows="3"></textarea>
         <button type="submit">Enviar</button>
     </form>
-
+    
     <table id="table-tasks">
         <thead>
             <tr>
-            <th>Tarea</th>
-            <th>Estado</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
+                <th>Tarea</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+    <script src="script.js"></script>
 </body>
 </html>

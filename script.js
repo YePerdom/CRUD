@@ -1,4 +1,23 @@
-const apiUrl = 'http//localhost:3000/todoList';
+const apiUrl = 'http://localhost:3000/todoList';
+
+document.getElementById("form-task").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = new FormData(this);
+    const data = Object.fromEntries(form.entries());
+    data.is_active = true;
+    
+    try {
+        await fetch(apiUrl, {
+            method: 'POST',
+            Headers: {'Content-Type':'aplication/json'},
+            body: JSON.stringify(data)
+        });
+        this.reset();
+        await createTask();
+    } catch (error) {
+        console.error('Error al crear tarea')
+    }
+});
 
 const getStatus = (status) => {
     switch (status){
@@ -13,48 +32,32 @@ const getStatus = (status) => {
     }
 }
 
-
-document.getElementById("form-task").addEventListener("submit", async function (e) {
-    e.preventDefault();
-    const form = new FormData(this);
-    const data = Object.fromEntries(form.entries());
-    data.is_active = true;
-
-    try {
-        await fletch(apiUrl, {
-            method: 'POST',
-            Headers: {'Content-Type':'aplication/json'},
-            body: JSON.stringify(data)
-        });
-        this.reset();
-        await getStatus();
-    } catch (error) {
-        console.error('Error al crear tarea')
-    }
-});
-
 async function createTask() {
     try {
-        const response = await fletch(`${apiUrl}?is_active=true`);
-        const tasks = await response.JSON();
-        const tbody = document.querySelector("#form tbody");
+        const response = await fetch(`${apiUrl}?is_active=true`);
+        const tasks = await response.json();
+        const tbody = document.querySelector("#table-tasks tbody");
         tbody.innerHTML = "";
 
         tasks.forEach(task => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
             <td>${task.name}</td>
-            <td>${task.status}</td>
+            <td>${getStatus(task.status)}</td>
             <td>${task.description}</td>
             <td>
               <button onclick>Editar</button>
               <button onclick>Eliminar</button>
             </td>
-          `;
+            `;
+            tbody.appendChild(fila);
         });
-        tbody.appendChild(fila);
     } catch (error) {
-        console.error("error al cargar la  tarea");
+        console.error("error al cargar la  tarea", error);
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    createTask();
+});
 
