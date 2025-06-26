@@ -13,15 +13,15 @@
         <label for="status">Estado de la tarea</label>
         <select name="status">
             <option value="" selected>--------------</option>
-            <option value="todo">Por hacer</option>
-            <option value="in_progress">En progreso</option>
-            <option value="done">Completada</option>
+            <option value="Por hacer">Por hacer</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Completada">Completada</option>
         </select>
         <label for="description">Descripción de la tarea</label>
         <textarea name="description" rows="3"></textarea>
         <button type="submit">Enviar</button>
     </form>
-    
+    <button onclick="showDeletedTasks()">Ver tareas eliminadas</button>
     <table id="table-tasks">
         <thead>
             <tr>
