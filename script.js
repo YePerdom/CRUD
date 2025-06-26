@@ -127,7 +127,7 @@ async function showDeletedTasks() {
             <td>${task.status}</td>
             <td>${task.description}</td>
             <td>
-              <button onclick="">Recuperar</button>
+              <button onclick="recoverTask(${task.id}, this)">Recuperar</button>
               <button onclick="deleteTask(${task.id})">Eliminar</button>
             </td>
             `;
